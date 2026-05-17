@@ -1,0 +1,6 @@
+FROM baseImage
+WORKDIR /app
+COPY source dest
+RUN command
+COPY ..
+CMD [ "executable" ]
