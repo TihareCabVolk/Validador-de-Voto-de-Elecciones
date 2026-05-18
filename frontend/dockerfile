@@ -1,6 +1,5 @@
 FROM baseImage
-WORKDIR /app
+WORKDIR /frontend
 COPY source dest
 RUN command
-COPY ..
 CMD [ "executable" ]
