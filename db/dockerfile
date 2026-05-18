@@ -1,5 +1,0 @@
-FROM baseImage
-WORKDIR /db
-COPY source dest
-RUN command
-CMD [ "executable" ]

@@ -1,3 +1,4 @@
+version: '3.8'
 # volumen para persistencia 
 volumes:
   postgres:
@@ -12,13 +13,15 @@ networks:
 
 services:
   nginx:
+    image: nginxinc/nginx-unprivileged:1-alpine
+    container_name: nginx_container
     build:
       context: ./nginx
       dockerfile: dockerfile
     ports:
-      - 80:80
+      - 80:8080
     networks:
-      - network
+      - network_sist
     depends_on:
       - frontend
       - backend
@@ -27,6 +30,7 @@ services:
     build:
       context: ./frontend
       dockerfile: dockerfile
+    container_name: frontend_container
     networks:
       - network
 
@@ -34,6 +38,7 @@ services:
     build:
       context: ./backend
       dockerfile: dockerfile
+    container_name: backend_container
     deploy:
       replicas: 2
     environment:
@@ -42,11 +47,12 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     networks:
-      - network
+      - network_sist
       - db_network
 
   DB:
     image: postgres:alpine
+    container_name: db_sistema
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
