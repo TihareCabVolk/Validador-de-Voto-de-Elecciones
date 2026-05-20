@@ -68,3 +68,7 @@ services:
 
 
 
+
+#Declaracion del volumen
+volumes:
+  data_taller3:
