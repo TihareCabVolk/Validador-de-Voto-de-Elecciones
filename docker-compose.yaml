@@ -1,8 +1,7 @@
-version: '3.8'
 # volumen para persistencia 
 volumes:
-  postgres_data:
-    name: db_postegres
+  data_taller3:
+    name: db_postgres
 
 # redes aisladas para seguridad
 networks:
@@ -42,33 +41,30 @@ services:
     ports:
       - 8080:8080
     #deploy:
-    #  replicas: 2
-    #environment:
-    #  - DB_HOST=DB
-    #  - DB_USER=${DB_USER}
-    #  - DB_PASSWORD=${DB_PASSWORD}
-    #  - DB_NAME=${DB_NAME}
+    #  replicas: 1
+    environment:
+      - DB_HOST=db_postgres
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     networks:
       - network_sist
-      #- db_network
-    #depends_on:
-    #  - DB
+      - db_network
+    depends_on:
+      - db_postgres
 
-  #DB:
-  #  image: postgres:alpine
-  #  container_name: db_test
-  #  environment:
-  #    - POSTGRES_USER=${DB_USER}
-  #    - POSTGRES_PASSWORD=${DB_PASSWORD}
-  #    - POSTGRES_DB=${DB_NAME}
-  #  volumes:
-  #    - postgres_data:/var/lib/postgresql/data
-  #  networks:
-  #    - db_network
+  db_postgres:
+      image: postgres:15-alpine
+      container_name: bd_elecciones
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+      volumes:
+        - data_taller3:/var/lib/postgresql/data # Persistencia de Datos
+        - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      networks:
+       - db_network
 
 
 
-
-#Declaracion del volumen
-volumes:
-  data_taller3:
