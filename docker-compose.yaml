@@ -29,7 +29,7 @@ services:
   frontend:
     build:
       context: ./frontend/votos
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     container_name: frontend_container
     ports:
       - 3000:3000
