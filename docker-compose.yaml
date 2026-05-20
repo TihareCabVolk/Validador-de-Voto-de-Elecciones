@@ -26,13 +26,13 @@ services:
   #    - frontend
   #    - backend
 
-  #frontend:
-  #  build:
-  #    context: ./frontend
-  #    dockerfile: dockerfile
-  #  container_name: frontend_container
-  #  networks:
-  #    - network_sist
+  frontend:
+    build:
+      context: ./frontend/votos
+      dockerfile: dockerfile
+    container_name: frontend_container
+    networks:
+      - network_sist
 
   backend:
     build:
