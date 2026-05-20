@@ -2,5 +2,4 @@ FROM baseImage
 WORKDIR /backend
 COPY source dest
 RUN command
-COPY ..
 CMD [ "executable" ]
