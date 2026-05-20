@@ -1,7 +1,7 @@
 version: '3.8'
 # volumen para persistencia 
 volumes:
-  postgres:
+  postgres_data:
     name: db_postegres
 
 # redes aisladas para seguridad
@@ -11,13 +11,14 @@ networks:
   db_network:
     driver: bridge
 
+# servicios
 services:
   nginx:
-    image: nginxinc/nginx-unprivileged:1-alpine
-    container_name: nginx_container
+    
     build:
       context: ./nginx
       dockerfile: dockerfile
+    container_name: nginx_container
     ports:
       - 80:8080
     networks:
@@ -32,17 +33,16 @@ services:
       dockerfile: dockerfile
     container_name: frontend_container
     networks:
-      - network
+      - network_sist
 
   backend:
     build:
       context: ./backend
       dockerfile: dockerfile
-    container_name: backend_container
     deploy:
       replicas: 2
     environment:
-      - DB_HOST=database
+      - DB_HOST=DB
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
