@@ -15,6 +15,6 @@ func main() {
 	h := handler.NewVotanteHandler(svc)
 	r := router.NewRouter(h)
 
-	log.Println("Servidor iniciado en :3001")
-	log.Fatal(r.Run(":3001"))
+	log.Println("Servidor iniciado en :8080")
+	log.Fatal(r.Run(":8080"))
 }

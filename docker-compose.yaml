@@ -13,54 +13,58 @@ networks:
 
 # servicios
 services:
-  nginx:
+  #nginx:
     
-    build:
-      context: ./nginx
-      dockerfile: dockerfile
-    container_name: nginx_container
-    ports:
-      - 80:8080
-    networks:
-      - network_sist
-    depends_on:
-      - frontend
-      - backend
+  #  build:
+  #    context: ./nginx
+  #    dockerfile: dockerfile
+  #  container_name: nginx_container
+  #  ports:
+  #    - 80:8080
+  #  networks:
+  #    - network_sist
+  #  depends_on:
+  #    - frontend
+  #    - backend
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: dockerfile
-    container_name: frontend_container
-    networks:
-      - network_sist
+  #frontend:
+  #  build:
+  #    context: ./frontend
+  #    dockerfile: dockerfile
+  #  container_name: frontend_container
+  #  networks:
+  #    - network_sist
 
   backend:
     build:
       context: ./backend
       dockerfile: dockerfile
-    deploy:
-      replicas: 2
-    environment:
-      - DB_HOST=DB
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+    ports:
+      - 8080:8080
+    #deploy:
+    #  replicas: 2
+    #environment:
+    #  - DB_HOST=DB
+    #  - DB_USER=${DB_USER}
+    #  - DB_PASSWORD=${DB_PASSWORD}
+    #  - DB_NAME=${DB_NAME}
     networks:
       - network_sist
-      - db_network
+      #- db_network
+    #depends_on:
+    #  - DB
 
-  DB:
-    image: postgres:alpine
-    container_name: db_sistema
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - db_network
+  #DB:
+  #  image: postgres:alpine
+  #  container_name: db_test
+  #  environment:
+  #    - POSTGRES_USER=${DB_USER}
+  #    - POSTGRES_PASSWORD=${DB_PASSWORD}
+  #    - POSTGRES_DB=${DB_NAME}
+  #  volumes:
+  #    - postgres_data:/var/lib/postgresql/data
+  #  networks:
+  #    - db_network
 
 
 
