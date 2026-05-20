@@ -74,18 +74,27 @@ const MOCK_DB: Record<number, Votante> = {
   },
 };
 
-const MOCK_DELAY_MS = 700;
+const B_URL = "http://localhost:3001";
 
 export async function getVotante(rut: string): Promise<Votante> {
-  await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
-  const data = MOCK_DB[Number.parseInt(rut, 10)];
-
-  if (!data) {
-    throw {
-      code: 404,
-      message: `votante con rut ${rut} no encontrado`,
-    } satisfies ApiError;
+  const res = await fetch(`${B_URL}/votante/${rut}`);
+  //await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
+  //const data = MOCK_DB[Number.parseInt(rut, 10)];
+  if (res.status === 400) {
+    throw { code: 400, message: "RUT inválido" } satisfies ApiError;
   }
 
-  return data;
+  if (res.status === 404) {
+    throw { code: 404, message: `votante con rut ${rut} no encontrado` } satisfies ApiError;
+  }
+
+  return res.json();
+  //if (!data) {
+   // throw {
+     // code: 404,
+     // message: `votante con rut ${rut} no encontrado`,
+   // } satisfies ApiError;
+  //}**
+
+  //return data;
 }
