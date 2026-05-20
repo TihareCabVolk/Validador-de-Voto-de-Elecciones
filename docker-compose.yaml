@@ -1,20 +1,36 @@
 services:
   # Capa de base de datos
+  db_postgres:
+    image: postgres:15-alpine
+    container_name: bd_elecciones
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - data_taller3:/var/lib/postgresql/data # Persistencia de Datos
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
   replica_1:
     build: ./app
     environment:
       - PUERTO=3001
-      # y la base de datos que se use
+       #y la base de datos que se use
 
-  # Capa de red: balanceador de carga o idk
+  #Capa de red: balanceador de carga o idk
   balanceador_carga_nginx:
     image: nginx:latest
     ports:
-      # Mapea el puerto 80
+       #Mapea el puerto 80
       - "80:80"
     volumes:
+
       # Inyectar configuracion de nginx
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       # todo lo que depende
-      - replica_1
+    - replica_1
+
+#Declaracion del volumen
+volumes:
+  data_taller3:
