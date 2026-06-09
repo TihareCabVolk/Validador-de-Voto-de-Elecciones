@@ -7,4 +7,4 @@ RUN npm config set fetch-retries 5 \
 RUN npm install --no-audit --no-fund
 COPY . .
 EXPOSE 3000
-CMD [ "npm", "run", "dev" ]
+CMD ["npm", "run", "build"] && ["npm", "run", "start"]
