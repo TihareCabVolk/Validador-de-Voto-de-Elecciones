@@ -12,27 +12,25 @@ networks:
 
 # servicios
 services:
-  #nginx:
+  nginx:
     
-  #  build:
-  #    context: ./nginx
-  #    dockerfile: dockerfile
-  #  container_name: nginx_container
-  #  ports:
-  #    - 80:8080
-  #  networks:
-  #    - network_sist
-  #  depends_on:
-  #    - frontend
-  #    - backend
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+    container_name: nginx_container
+    ports:
+      - 80:80
+    networks:
+      - network_sist
+    depends_on:
+      - frontend
+      - backend
 
   frontend:
     build:
       context: ./frontend/votos
       dockerfile: Dockerfile
     container_name: frontend_container
-    ports:
-      - 3000:3000
     networks:
       - network_sist
 
@@ -40,10 +38,8 @@ services:
     build:
       context: ./backend
       dockerfile: dockerfile
-    ports:
-      - 8080:8080
-    #deploy:
-    #  replicas: 1
+    deploy:
+      replicas: 2
     environment:
       - DB_HOST=db_postgres
       - DB_USER=${DB_USER}
@@ -66,7 +62,7 @@ services:
         - data_taller3:/var/lib/postgresql/data # Persistencia de Datos
         - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       networks:
-       - db_network
+        - db_network
 
 
 
