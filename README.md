@@ -26,7 +26,7 @@ El sistema está diseñado bajo el patrón de Arquitectura en N-Capas, completam
 
 ---
 
-## Características de Seguridad y Optimización (Rúbrica)
+## Características de Seguridad y Optimización 
 
 * **Imágenes Minimalistas (Alpine):** Todos los componentes del sistema utilizan distribuciones basadas en Alpine Linux para reducir drásticamente el tamaño de las imágenes, mitigar vulnerabilidades comunes (CVEs) y optimizar los tiempos de despliegue.
 * **Construcción Multi-Etapa (Multi-stage Build):** El Dockerfile de Go compila de forma estática el binario utilizando una imagen de desarrollo `golang:alpine` y posteriormente traslada únicamente el ejecutable final a un contenedor `alpine:latest` limpio, reduciendo el peso final en más de un 80%.
