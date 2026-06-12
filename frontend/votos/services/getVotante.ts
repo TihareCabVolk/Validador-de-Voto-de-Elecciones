@@ -74,10 +74,10 @@ const MOCK_DB: Record<number, Votante> = {
   },
 };
 
-const B_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080";
+const B_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api";
 
 export async function getVotante(rut: string): Promise<Votante> {
-  const res = await fetch(`${B_URL}/votante/${rut}`);
+  const res = await fetch(`${B_URL}/votante/${rut}`); 
   //await new Promise((resolve) => setTimeout(resolve, MOCK_DELAY_MS));
   //const data = MOCK_DB[Number.parseInt(rut, 10)];
   if (res.status === 400) {
